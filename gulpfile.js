@@ -9,11 +9,12 @@ var genPath = "./src/assets/gen";
  * javascript tasks
  */
 var jsSrc = function (isRelease) {
-    var angular = gulp.src([
+    var libs = gulp.src([
         assetPath + "/libs/angular/angular.min.js",
         assetPath + "/libs/angular/angular-resource.min.js",
         assetPath + "/libs/angular/angular-sanitize.min.js",
-        assetPath + "/libs/angular/angular-ui-router.min.js"
+        assetPath + "/libs/angular/angular-ui-router.min.js",
+        assetPath + "/libs/angular-md/angular-material.min.js"
     ]);
 
     var custom = gulp.src([
@@ -26,7 +27,7 @@ var jsSrc = function (isRelease) {
     ]);
 
     return streamqueue({ objectMode: true })
-        .queue(angular)
+        .queue(libs)
         .queue(isRelease ? custom.pipe(plugins.uglify()) : custom)
         .done();
 };
@@ -47,9 +48,10 @@ gulp.task("js-release", function () {
  * css tasks
  */
 gulp.task("css", function () {
-    return gulp.src([assetPath + "/less/main.less"])
-        .pipe(plugins.less())
-        .pipe(plugins.minifyCss())
+    var libs = gulp.src([assetPath + "/libs/angular-md/angular-material.min.css"]);
+    var custom = gulp.src([assetPath + "/less/main.less"]).pipe(plugins.less()).pipe(plugins.minifyCss());
+
+    return streamqueue({ objectMode: true }).queue(libs).queue(custom).done()
         .pipe(plugins.concat("app.min.css"))
         .pipe(gulp.dest(genPath + "/css/"));
 });
