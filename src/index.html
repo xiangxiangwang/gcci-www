@@ -30,6 +30,14 @@
         </div>
     </md-whiteframe>
 </div>
+<div class="gallery">
+    <div layout="row" layout-align="space-between">
+        <img ng-repeat="img in main.gallery" src="{{img.img}}" alt="" width="150" height="100"/>
+    </div>
+</div>
+<div class="message">
+    <div class="title">Message</div>
+</div>
 
 <script type="text/javascript" src="assets/gen/js/app.js"></script>
 </body>
