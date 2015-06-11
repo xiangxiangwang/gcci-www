@@ -1,0 +1,1 @@
+var gcci = angular.module("gcci", []);

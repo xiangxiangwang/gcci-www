@@ -48,5 +48,6 @@ crashlytics.properties
 crashlytics-build.properties
 
 
-
+# application specific
 node_modules
+src/assets/gen

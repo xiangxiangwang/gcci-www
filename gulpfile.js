@@ -5,7 +5,10 @@ var gulp = require("gulp"),
 var assetPath = "src/assets";
 var genPath = "./src/assets/gen";
 
-var js = function (isRelease) {
+/**
+ * javascript tasks
+ */
+var jsSrc = function (isRelease) {
     var angular = gulp.src([
         assetPath + "/libs/angular/angular.min.js",
         assetPath + "/libs/angular/angular-resource.min.js",
@@ -29,32 +32,52 @@ var js = function (isRelease) {
 };
 
 gulp.task("js-dev", function () {
-    return js()
+    return jsSrc()
         .pipe(plugins.concat("app.js"))
         .pipe(gulp.dest(genPath + "/js/"));
 });
 
 gulp.task("js-release", function () {
-    return js()
+    return jsSrc(true)
         .pipe(plugins.concat("app.min.js"))
-        .pipe(gulp.dest(gen + "/js/"));
+        .pipe(gulp.dest(genPath + "/js/"));
 });
 
 /**
- * watch task
+ * css tasks
+ */
+gulp.task("css", function () {
+    return gulp.src([assetPath + "/less/main.less"])
+        .pipe(plugins.less())
+        .pipe(plugins.minifyCss())
+        .pipe(plugins.concat("app.min.css"))
+        .pipe(gulp.dest(genPath + "/css/"));
+});
+
+/**
+ * font tasks
+ */
+gulp.task("fonts", function () {
+
+});
+
+/**
+ * watch tasks
  */
 gulp.task("watch", function () {
     var reload = function (e) {
         setTimeout(function () {
             plugins.livereload.changed(e);
-        }, 2000);
+        }, 1000);
     };
 
     plugins.livereload.listen();
     gulp.watch(assetPath + "/less/**/*.less", ["css"]).on("change", reload);
-    gulp.watch(assetPath + "/js/**/*.js", ["js"]).on("change", reload);
+    gulp.watch(assetPath + "/js/**/*.js", ["js-dev"]).on("change", reload);
     gulp.watch(["src/templates/**/*.html"]).on("change", reload);
-    gulp.watch(["src/**/*.py"]).on("change", reload);
 });
 
-gulp.task("compile", ["css", "fonts", "js"]);
+/**
+ * compile all tasks
+ */
+gulp.task("compile", ["css", "fonts", "js-dev", "js-release"]);
