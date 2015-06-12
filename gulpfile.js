@@ -48,7 +48,10 @@ gulp.task("js-release", function () {
  * css tasks
  */
 gulp.task("css", function () {
-    var libs = gulp.src([assetPath + "/libs/angular-md/angular-material.min.css"]);
+    var libs = gulp.src([
+        assetPath + "/libs/angular-md/angular-material.min.css",
+        assetPath + "/libs/font-awesome/css/font-awesome.min.css"
+    ]);
     var custom = gulp.src([assetPath + "/less/main.less"]).pipe(plugins.less()).pipe(plugins.minifyCss());
 
     return streamqueue({ objectMode: true }).queue(libs).queue(custom).done()
@@ -60,7 +63,8 @@ gulp.task("css", function () {
  * font tasks
  */
 gulp.task("fonts", function () {
-
+    return gulp.src([assetPath + "/libs/font-awesome/fonts/*"])
+        .pipe(gulp.dest(genPath + "/fonts/"));
 });
 
 /**

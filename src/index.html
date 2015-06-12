@@ -11,7 +11,7 @@
 
 <div class="navbar">
     <div layout="row" layout-align="space-between">
-        <div class="logo">Great Commission Church International</div>
+        <div class="logo">GCCI 國際大使命教會</div>
         <div>
             <ul class="site-menu">
                 <li ng-repeat="item in ::main.mainMenu"><a ui-sref="::item.link" ng-bind="::item.label"></a></li>
@@ -21,22 +21,36 @@
 </div>
 <div class="main-frame">
     <md-whiteframe class="md-whiteframe-z4" layout layout-align="center center">
-        <div>
+        <div class="content">
             <span class="title">本週經文</span>
             <br/><br/>
             <span>弟兄們，我不是以為自己已經得著了，我只有一件事，就是忘記背後，努力面前的，向著標竿直跑，要得神在基督耶穌裏從上面召我來得的獎賞。所以我們中間凡是完全人，總要存這樣的心；若在什麼事上存別樣的心，神也必以此指示你們。 </span>
             <br/><br/>
-            <span>腓立比書3:13-15</span>
+            <span class="footer">腓立比書3:13-15</span>
         </div>
     </md-whiteframe>
 </div>
 <div class="gallery">
+    <div class="title">近期剪影</div>
     <div layout="row" layout-align="space-between">
         <img ng-repeat="img in main.gallery" src="{{img.img}}" alt="" width="150" height="100"/>
     </div>
 </div>
 <div class="message">
-    <div class="title">Message</div>
+    <div class="title">主日信息</div>
+    <div class="content">
+        <md-whiteframe class="md-whiteframe-z4" layout="column">
+            <div>
+                <div class="message-item" layout="row" layout-align="space-between" ng-repeat="msg in ::main.messages" flex>
+                    <div><a href="">{{::msg.title}}</a></div>
+                    <div>{{::msg.date}}</div>
+                </div>
+            </div>
+            <div layout layout-align="end" class="more-messages">
+                <a href="">更多</a>
+            </div>
+        </md-whiteframe>
+    </div>
 </div>
 
 <script type="text/javascript" src="assets/gen/js/app.js"></script>
