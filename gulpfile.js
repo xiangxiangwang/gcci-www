@@ -52,7 +52,10 @@ gulp.task("css", function () {
         assetPath + "/libs/angular-md/angular-material.min.css",
         assetPath + "/libs/font-awesome/css/font-awesome.min.css"
     ]);
-    var custom = gulp.src([assetPath + "/less/main.less"]).pipe(plugins.less()).pipe(plugins.minifyCss());
+    var custom = gulp.src([assetPath + "/less/main.less"])
+        .pipe(plugins.less())
+        .pipe(plugins.autoprefixer())
+        .pipe(plugins.minifyCss());
 
     return streamqueue({ objectMode: true }).queue(libs).queue(custom).done()
         .pipe(plugins.concat("app.min.css"))
@@ -80,7 +83,7 @@ gulp.task("watch", function () {
     plugins.livereload.listen();
     gulp.watch(assetPath + "/less/**/*.less", ["css"]).on("change", reload);
     gulp.watch(assetPath + "/js/**/*.js", ["js-dev"]).on("change", reload);
-    gulp.watch(["src/templates/**/*.html"]).on("change", reload);
+    gulp.watch(["src/**/*.html"]).on("change", reload);
 });
 
 /**
